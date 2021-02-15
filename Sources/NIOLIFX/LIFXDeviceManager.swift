@@ -107,6 +107,15 @@ public final class LIFXDeviceManager {
     func triggerUserOutboundEvent(_ message: Message, responseHandler: @escaping (Message) -> Void) -> EventLoopFuture<Void> {
         channel.triggerUserOutboundEvent((message, responseHandler))
     }
+    
+    public func printAllDevices() {
+        guard devices.isEmpty else {
+            print("🔍\tCould not find any LIFX devices.")
+            return
+        }
+        
+        print(devices.reduce("\n💡", { $0 + "\t\($1)\n" }))
+    }
 }
 
 extension FutureValue {

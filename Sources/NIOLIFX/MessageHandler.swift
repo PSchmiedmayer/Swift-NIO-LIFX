@@ -17,7 +17,8 @@ final class MessageHandler: ChannelDuplexHandler {
         self.addressCache = [.all: SocketAddress(broadcastIP, port: 56700, host: "LIFXBroadcastIP")]
     }
     
-    func channelRead(ctx: ChannelHandlerContext, data: NIOAny) {
+    
+    func channelRead(context: ChannelHandlerContext, data: NIOAny) {
         let envelope = self.unwrapInboundIn(data)
         let message = envelope.data
         
@@ -48,14 +49,23 @@ final class MessageHandler: ChannelDuplexHandler {
         messageResponseHandler(message)
     }
     
-    func write(ctx: ChannelHandlerContext, data: NIOAny, promise: EventLoopPromise<Void>?) {
+    func write(context: ChannelHandlerContext, data: NIOAny, promise: EventLoopPromise<Void>?) {
         let (message, messageResponseHandler) = unwrapOutboundIn(data)
         message.sequenceNumber = nextSequenceNumber()
         responseHandler[message.sequenceNumber] = (type(of: message), messageResponseHandler)
         
         let remoteAddress = addressCache[message.target] ?? addressCache[.all]!
         let addressedEnvelope = AddressedEnvelope(remoteAddress: remoteAddress, data: message)
-        ctx.writeAndFlush(wrapOutboundOut(addressedEnvelope), promise: promise)
+        context.writeAndFlush(wrapOutboundOut(addressedEnvelope), promise: promise)
+    }
+    
+    func triggerUserOutboundEvent(context: ChannelHandlerContext, event: Any, promise: EventLoopPromise<Void>?) {
+        guard let event = event as? (Message, (Message) -> Void) else {
+            promise?.fail(MessageError.messageFormat)
+            return
+        }
+        
+        write(context: context, data: NIOAny(event), promise: promise)
     }
     
     private func nextSequenceNumber() -> UInt8 {

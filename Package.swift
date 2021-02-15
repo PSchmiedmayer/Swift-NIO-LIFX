@@ -10,6 +10,7 @@ let package = Package(
         .library(name: "NIOLIFX", targets: ["NIOLIFX"])
     ],
     dependencies: [
+        .package(name: "swift-argument-parser", url: "https://github.com/apple/swift-argument-parser", from: "0.3.0"),
         .package(name: "swift-nio", url: "https://github.com/apple/swift-nio.git", from: "2.25.1"),
         .package(name: "swift-nio-ip", url: "https://github.com/PSchmiedmayer/Swift-NIO-IP.git", from: "0.0.1")
     ],
@@ -17,6 +18,7 @@ let package = Package(
         .target(
             name: "lifx",
             dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .target(name: "NIOLIFX")
             ]
         ),
