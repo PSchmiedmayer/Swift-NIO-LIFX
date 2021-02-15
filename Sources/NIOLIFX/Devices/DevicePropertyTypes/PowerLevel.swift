@@ -21,9 +21,9 @@ extension Device.PowerLevel: CustomStringConvertible {
     public var description: String {
         switch self {
         case .standby:
-            return "Standby"
+            return "standby"
         case .enabled:
-            return "Powered On"
+            return "powered on"
         }
     }
 }

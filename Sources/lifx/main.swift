@@ -5,43 +5,65 @@ import NIOLIFX
 
 
 struct LIFX: ParsableCommand {
+    enum InitialAction: String, Codable, ExpressibleByArgument {
+        case on
+        case off
+    }
+    
+    
+    static var configuration: CommandConfiguration = CommandConfiguration(
+        commandName: "lifx",
+        abstract: "💡 LIFX NIO Example: An example command line tool to showcase the functionality of the LIFXNIO library."
+    )
+    
+    
     @Option(help: "The IPv4 network interface that should be used.")
     var interfaceName: String = "en0"
     
     @Option(help: "The logging level used by the logger.")
-    var logLevel: Logger.Level?
+    var logLevel: Logger.Level = .error
+    
+    @Option(help: "The initial action that should be performed by the NIOLIFX example.")
+    var initialAction: InitialAction = .on
     
     
     mutating func run() throws {
         var logger: Logger = Logger(label: "lifx")
-        if let logLevel = logLevel {
-            logger.logLevel = logLevel
-        }
+        logger.logLevel = logLevel
         
         let networkInterface = getNetworkInterface(logger)
         let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 2)
 
         let lifxDeviceManager = try LIFXDeviceManager(using: networkInterface, on: eventLoopGroup, logLevel: logLevel)
         
-        var on: Bool = true
+        var on: Bool = initialAction == .on ? true : false
+        
+        print(
+            """
+            👋 Welcome to the LIFXNIO example!
+
+               The example sends out discovery messages to detect any LIFX devices in your network when you press the return key.
+               After detecting devices all detected devices are tooggled on or off. The next time devices are discovered they will be turned \(on ? "on" : "off").
+            
+               Press return to discover devices and tooggle them \(on ? "on" : "off"). Press return again to power all devices \(!on ? "on" : "off").
+            """
+        )
         
         while let _ = readLine(strippingNewline: false) {
-            logger.notice("🔍 ... discovering new devices.")
+            print("🔍 ... discovering new devices.")
                 lifxDeviceManager.discoverDevices()
                     .whenSuccess {
                         guard !lifxDeviceManager.devices.isEmpty else {
-                            logger.warning("🔍 Could not find any LIFX devices.")
+                            print("🔍 Could not find any LIFX devices.")
                             return
                         }
                         
-                        logger.notice("✅ Discovered the following devices:")
+                        print("✅ Discovered the following devices:")
                         for device in lifxDeviceManager.devices {
-                            logger.notice(
-                                "\(device.label) (\(device.group), \(device.location)): \(device.powerLevel)"
-                            )
+                            print("   💡 \(device.label) (\(device.group), \(device.location)): \(device.powerLevel.wrappedValue == .enabled ? "On" : "Off")")
                         }
                         
-                        logger.notice("💡 Turning all devices \(on ? "on" :  "off")")
+                        print("⚙️ Turning all devices \(on ? "on" :  "off")")
                         lifxDeviceManager.devices.forEach { device in
                             let future: EventLoopFuture<Device.PowerLevel>
                             if on {
@@ -51,7 +73,7 @@ struct LIFX: ParsableCommand {
                             }
                             
                             future.whenSuccess { powerLevel in
-                                logger.notice("💡 \(device.label) is now \(powerLevel)")
+                                print("   💡 \(device.label)  (\(device.group), \(device.location)) is now turned \(device.powerLevel.wrappedValue == .enabled ? "on" : "off").")
                             }
                             future.whenFailure { error in
                                 logger.error("Could not change powerLevel of \(device.label): \"\(error)\"")
