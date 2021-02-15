@@ -143,7 +143,7 @@ class Message {
         - sequenceNumber: Wrap around message sequence number.
         - payload: The encoded payload of the `Message`.
      */
-    init(source: UInt32 = 0,
+    init(source: UInt32 = LIFXDeviceManager.sourceIdentifier,
          target: Target,
          requestAcknowledgement: Bool,
          requestResponse: Bool,
@@ -279,8 +279,8 @@ extension ByteBuffer {
         writeBytes(Array(repeating: UInt8(0), count: 6))
         
         var frameAddressBits: UInt8 = 0
-        frameAddressBits |= (message.requestAcknowledgement ? 0b1 : 0b0) << 1 // Acknowledgement message required bit
         frameAddressBits |= (message.requestResponse ? 0b1 : 0b0) // Response message required bit
+        frameAddressBits |= (message.requestAcknowledgement ? 0b1 : 0b0) << 1 // Acknowledgement message required bit
         
         // Write acknowledgement bit and response bit.
         writeInteger(frameAddressBits, endianness: .little)

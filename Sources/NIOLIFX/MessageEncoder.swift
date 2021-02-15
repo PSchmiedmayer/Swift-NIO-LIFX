@@ -12,13 +12,18 @@ final class MessageEncoder: ChannelOutboundHandler {
         var buffer = context.channel.allocator.buffer(capacity: 512)
         buffer.write(message: envelope.data)
         
-        print("""
+        LIFXDeviceManager.logger.debug(
+            """
             Send to \(envelope.remoteAddress.description):
-            [\((0..<buffer.readableBytes)
-                .compactMap({ buffer.getInteger(at: buffer.readerIndex.advanced(by: $0), as: UInt8.self) })
-                .map({ (byte: UInt8) -> String in "0x\(String(byte, radix: 16, uppercase: true))" })
-                .joined(separator: ", "))]
-            """)
+            [\n\(
+                (0..<buffer.readableBytes)
+                    .compactMap({ buffer.getInteger(at: buffer.readerIndex.advanced(by: $0), as: UInt8.self) })
+                    .enumerated()
+                    .map({ (index: Int, byte: UInt8) -> String in "    Byte \(index): 0x\(String(byte, radix: 16, uppercase: true))" })
+                    .joined(separator: "\n")
+            )\n]
+            """
+        )
         
         context.writeAndFlush(self.wrapOutboundOut(AddressedEnvelope(remoteAddress: envelope.remoteAddress, data: buffer)), promise: promise)
     }

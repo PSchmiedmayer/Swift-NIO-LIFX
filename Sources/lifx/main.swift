@@ -1,4 +1,5 @@
 import ArgumentParser
+import Logging
 import NIO
 import NIOLIFX
 
@@ -7,23 +8,38 @@ struct LIFX: ParsableCommand {
     @Option(help: "The IPv4 network interface that should be used.")
     var interfaceName: String = "en0"
     
+    @Option(help: "The logging level used by the logger.")
+    var logLevel: Logger.Level?
+    
     
     mutating func run() throws {
-        let networkInterface = getNetworkInterface()
+        var logger: Logger = Logger(label: "lifx")
+        if let logLevel = logLevel {
+            logger.logLevel = logLevel
+        }
+        
+        let networkInterface = getNetworkInterface(logger)
         let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 2)
 
-        let lifxDeviceManager = try LIFXDeviceManager(using: networkInterface, on: eventLoopGroup)
+        let lifxDeviceManager = try LIFXDeviceManager(using: networkInterface, on: eventLoopGroup, logLevel: logLevel)
         
         var on: Bool = false
         
-        while let _ = readLine(strippingNewline: false) {
-            print("🔍\t... discovering new devices.")
+        //while let _ = readLine(strippingNewline: false) {
+        logger.notice("🔍 ... discovering new devices.")
             lifxDeviceManager.discoverDevices()
                 .whenSuccess {
-                    print("✅\tDiscovered the following devices:")
-                    lifxDeviceManager.printAllDevices()
+                    guard !lifxDeviceManager.devices.isEmpty else {
+                        logger.warning("🔍 Could not find any LIFX devices.")
+                        return
+                    }
                     
-                    print("💡\tTurning all devices \(on ? "on" :  "off")")
+                    logger.notice("✅ Discovered the following devices:")
+                    logger.notice(
+                        Logger.Message(stringLiteral: lifxDeviceManager.devices.reduce("\n💡", { $0 + "\t\($1)\n" }))
+                    )
+                    
+                    logger.notice("💡 Turning all devices \(on ? "on" :  "off")")
                     lifxDeviceManager.devices.forEach { device in
                         let future: EventLoopFuture<Device.PowerLevel>
                         if on {
@@ -33,21 +49,22 @@ struct LIFX: ParsableCommand {
                         }
                         
                         future.whenSuccess { powerLevel in
-                            print("💡\t\(device.label) is now \(powerLevel)")
+                            logger.notice("💡 \(device.label) is now \(powerLevel)")
                         }
                         future.whenFailure { error in
-                            print("❗️\tERROR: Could not change powerLevel of \(device.label): \"\(error)\"")
+                            logger.error("Could not change powerLevel of \(device.label): \"\(error)\"")
                         }
                         
                         on.toggle()
                     }
                 }
-        }
+        //}
 
+        while let _ = readLine(strippingNewline: false) {}
         try eventLoopGroup.syncShutdownGracefully()
     }
     
-    private func getNetworkInterface() -> NIONetworkDevice {
+    private func getNetworkInterface(_ logger: Logger) -> NIONetworkDevice {
         let networkInterfaces = try! System.enumerateDevices()
         for interface in networkInterfaces {
             if case .v4 = interface.address, interface.name == interfaceName {
@@ -55,7 +72,7 @@ struct LIFX: ParsableCommand {
             }
         }
         
-        print(
+        logger.critical(
             """
             Didn't find a interface with the name \"\(interfaceName)\" that on the device.
             Please specify a network interface:

@@ -1,18 +1,23 @@
+import Logging
 import NIO
 import NIOIP
+
+
 
 public final class LIFXDeviceManager {
     public enum Constants {
         public static var lifxTimout: TimeAmount = .seconds(2)
     }
     
+    
+    private(set) internal static var sourceIdentifier: UInt32 = UInt32.random(in: UInt32.min..<UInt32.max)
+    private(set) internal static var logger = Logger(label: "NIOLIFX")
+    
+    
     public private(set) var devices: Set<Device> = [] {
         didSet {
             updateNotifier?.updateNotifier()
         }
-    }
-    public var eventLoop: EventLoop {
-        channel.eventLoop
     }
     public var updateNotifier: (discoverInterval: TimeAmount, updateNotifier: () -> Void)? {
         didSet {
@@ -28,14 +33,24 @@ public final class LIFXDeviceManager {
             })
         }
     }
-    
     private var updateScheduled: RepeatedTask?
     private let eventLoopGroup: EventLoopGroup
     private let messageHandler: MessageHandler
     private var channel: Channel
     
+    
+    public var eventLoop: EventLoop {
+        channel.eventLoop
+    }
+    
+    
     public init(using networkDevice: NIONetworkDevice,
-                on eventLoopGroup: EventLoopGroup) throws {
+                on eventLoopGroup: EventLoopGroup,
+                logLevel: Logger.Level?) throws {
+        if let logLevel = logLevel {
+            LIFXDeviceManager.logger.logLevel = logLevel
+        }
+        
         guard let broadcastAddress = networkDevice.broadcastAddress, let broadcastIP = broadcastAddress.ip else {
             preconditionFailure("The networkInterface needs to have a broadcastAddress!")
         }
@@ -58,9 +73,11 @@ public final class LIFXDeviceManager {
         discoverDevices()
     }
     
+    
     deinit {
         try! channel.close().wait()
     }
+    
     
     @discardableResult
     public func discoverDevices() -> EventLoopFuture<Void> {
@@ -92,12 +109,16 @@ public final class LIFXDeviceManager {
         }
         
         userOutboundEventFuture.whenSuccess {
-            print("💭\tSend out LIFX discovery message")
+            LIFXDeviceManager.logger.info(
+                "Send out LIFX discovery message. Waiting \(Constants.lifxTimout.nanoseconds / 1000000000) seconds for responses ..."
+            )
         }
         userOutboundEventFuture.whenFailure { error in
             timeoutTask.cancel()
             discoverPromise.fail(error)
-            print("❗️\tFailed to send out LIFX discovery message: \(error)")
+            LIFXDeviceManager.logger.error(
+                "Failed to send out LIFX discovery message: \(error)"
+            )
         }
         
         return discoverPromise.futureResult
@@ -106,15 +127,6 @@ public final class LIFXDeviceManager {
     @discardableResult
     func triggerUserOutboundEvent(_ message: Message, responseHandler: @escaping (Message) -> Void) -> EventLoopFuture<Void> {
         channel.triggerUserOutboundEvent((message, responseHandler))
-    }
-    
-    public func printAllDevices() {
-        guard devices.isEmpty else {
-            print("🔍\tCould not find any LIFX devices.")
-            return
-        }
-        
-        print(devices.reduce("\n💡", { $0 + "\t\($1)\n" }))
     }
 }
 

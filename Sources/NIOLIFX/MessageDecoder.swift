@@ -17,21 +17,25 @@ final class MessageDecoder: ChannelInboundHandler {
             var buffer = envelope.data.slice()
             // Read the message from the buffer.
             
-            /*
-            print("""
-                Recieved:
-                [\((0..<buffer.readableBytes)
-                .compactMap({ buffer.getInteger(at: buffer.readerIndex.advanced(by: $0), as: UInt8.self) })
-                .map({ (byte: UInt8) -> String in "0x\(String(byte, radix: 16, uppercase: true))" })
-                .joined(separator: ", "))]
-                """)
-            */
+            
+            LIFXDeviceManager.logger.debug(
+                """
+                Recieved from \(envelope.remoteAddress.description):
+                [\n\(
+                    (0..<buffer.readableBytes)
+                        .compactMap({ buffer.getInteger(at: buffer.readerIndex.advanced(by: $0), as: UInt8.self) })
+                        .enumerated()
+                        .map({ (index: Int, byte: UInt8) -> String in "    Byte \(index): 0x\(String(byte, radix: 16, uppercase: true))" })
+                        .joined(separator: "\n")
+                )\n]
+                """
+            )
             
             let message = try buffer.readMessage()
             // The decoded message is passed inbound to the next `ChannelInboundHandler`.
             context.fireChannelRead(wrapInboundOut(AddressedEnvelope(remoteAddress: envelope.remoteAddress, data: message)))
         } catch {
-            print("💭\tDropped Message: \(self.unwrapInboundIn(data))")
+            LIFXDeviceManager.logger.info("Dropped Message: \(self.unwrapInboundIn(data))")
         }
     }
 }
