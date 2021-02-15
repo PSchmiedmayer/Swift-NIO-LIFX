@@ -44,7 +44,7 @@ final class MessageHandler: ChannelDuplexHandler {
             addressCache[message.target] = envelope.remoteAddress
         }
         
-        guard message.source == source || message.source == 0 else {
+        guard message.source == source || message.source == LIFXDeviceManager.sourceIdentifier else {
             LIFXDeviceManager.logger.info(
                 "Drop message as message not a response/acknowledgement to a message send by this client. (source not matching)"
             )

@@ -1,35 +1,27 @@
 import NIO
 
-protocol StateMessage {
-    /**
-     Type of content that is transmitted by the State Message
-     */
-    associatedtype Content
-    
-    /**
-     Key path to the content of the State message
-     */
-    static var content: KeyPath<Self, Content> { get }
-}
 
+@propertyWrapper
 public class FutureValue<T> {
     public typealias Future = EventLoopFuture
     public typealias Promise = EventLoopPromise
     
-    public internal(set) var cachedValue: T?
     
+    public internal(set) var wrappedValue: T?
     private var _loadingHandler: () -> Promise<T>
     private var _currentPromise: EventLoopPromise<T>?
     
-    public var value: (cachedValue: T?, futureValue: Future<T>) {
-        (cachedValue, load())
+    
+    public var projectedValue: FutureValue<T> {
+        self
     }
     
     init(loadingHandler: @escaping () -> Promise<T>,
          cachedValue: T? = nil) {
-        self.cachedValue = cachedValue
+        self.wrappedValue = cachedValue
         self._loadingHandler = loadingHandler
     }
+    
     
     @discardableResult
     public func load() -> Future<T> {
@@ -39,7 +31,7 @@ public class FutureValue<T> {
                 self?._currentPromise = nil
             }
             self._currentPromise!.futureResult.whenSuccess({
-                self.cachedValue = $0
+                self.wrappedValue = $0
             })
             return self._currentPromise!.futureResult
         }
@@ -54,18 +46,18 @@ public class FutureValue<T> {
 
 extension FutureValue: Hashable where T: Hashable {
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(cachedValue)
+        hasher.combine(wrappedValue)
     }
 }
 
 extension FutureValue: Equatable where T: Equatable {
     public static func == (lhs: FutureValue<T>, rhs: FutureValue<T>) -> Bool {
-        lhs.cachedValue == rhs.cachedValue
+        lhs.wrappedValue == rhs.wrappedValue
     }
 }
 
 extension FutureValue: CustomStringConvertible where T: CustomStringConvertible {
     public var description: String {
-        cachedValue?.description ?? "NO CACHED VALUE"
+        wrappedValue?.description ?? "NO CACHED VALUE"
     }
 }

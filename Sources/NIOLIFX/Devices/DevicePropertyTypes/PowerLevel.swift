@@ -17,6 +17,17 @@ extension Device {
     }
 }
 
+extension Device.PowerLevel: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .standby:
+            return "Standby"
+        case .enabled:
+            return "Powered On"
+        }
+    }
+}
+
 // Get an instance of `Device.PowerLevel` from a `ByteBuffer` and set an instance of `Device.PowerLevel` to a `ByteBuffer`.
 extension ByteBuffer {
     /**

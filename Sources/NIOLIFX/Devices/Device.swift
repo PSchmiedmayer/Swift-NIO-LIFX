@@ -94,10 +94,11 @@ public class Device {
          getValuesUsing deviceManager: LIFXDeviceManager) {
         self.address = address
         self.deviceManager = deviceManager
-        self.service.cachedValue = service
+        self.service.wrappedValue = service
         self.label.load()
         self.group.load()
         self.location.load()
+        self.powerLevel.load()
     }
     
     /**
@@ -138,14 +139,14 @@ public class Device {
     public func updateCachedValues(from oldDevice: Device) {
         precondition(oldDevice.address == address)
         
-        hardwareInfo.cachedValue = oldDevice.hardwareInfo.cachedValue
-        firmware.cachedValue = oldDevice.firmware.cachedValue
-        transmissionInfo.cachedValue = oldDevice.transmissionInfo.cachedValue
-        powerLevel.cachedValue = oldDevice.powerLevel.cachedValue
-        runtimeInfo.cachedValue = oldDevice.runtimeInfo.cachedValue
-        label.cachedValue = oldDevice.label.cachedValue
-        location.cachedValue = oldDevice.location.cachedValue
-        group.cachedValue = oldDevice.group.cachedValue
+        hardwareInfo.wrappedValue = oldDevice.hardwareInfo.wrappedValue
+        firmware.wrappedValue = oldDevice.firmware.wrappedValue
+        transmissionInfo.wrappedValue = oldDevice.transmissionInfo.wrappedValue
+        powerLevel.wrappedValue = oldDevice.powerLevel.wrappedValue
+        runtimeInfo.wrappedValue = oldDevice.runtimeInfo.wrappedValue
+        label.wrappedValue = oldDevice.label.wrappedValue
+        location.wrappedValue = oldDevice.location.wrappedValue
+        group.wrappedValue = oldDevice.group.wrappedValue
     }
     
     /**
@@ -159,7 +160,7 @@ public class Device {
         deviceManager.triggerUserOutboundEvent(S(value, target: Target(address))) { message in
             if let message = message as? S.CorrespondingStateMessage {
                 #warning("TODO: The State Message returns the OLD state. Work with Acknowledegements here and trigger a cache gefresh afterwards?")
-                self[keyPath: updateKeyPath].cachedValue = message[keyPath: S.CorrespondingStateMessage.content]
+                self[keyPath: updateKeyPath].wrappedValue = message[keyPath: S.CorrespondingStateMessage.content]
                 promise.succeed(message[keyPath: S.CorrespondingStateMessage.content])
             }
         }

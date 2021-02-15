@@ -23,44 +23,45 @@ struct LIFX: ParsableCommand {
 
         let lifxDeviceManager = try LIFXDeviceManager(using: networkInterface, on: eventLoopGroup, logLevel: logLevel)
         
-        var on: Bool = false
+        var on: Bool = true
         
-        //while let _ = readLine(strippingNewline: false) {
-        logger.notice("🔍 ... discovering new devices.")
-            lifxDeviceManager.discoverDevices()
-                .whenSuccess {
-                    guard !lifxDeviceManager.devices.isEmpty else {
-                        logger.warning("🔍 Could not find any LIFX devices.")
-                        return
-                    }
-                    
-                    logger.notice("✅ Discovered the following devices:")
-                    logger.notice(
-                        Logger.Message(stringLiteral: lifxDeviceManager.devices.reduce("\n💡", { $0 + "\t\($1)\n" }))
-                    )
-                    
-                    logger.notice("💡 Turning all devices \(on ? "on" :  "off")")
-                    lifxDeviceManager.devices.forEach { device in
-                        let future: EventLoopFuture<Device.PowerLevel>
-                        if on {
-                            future = device.set(powerLevel: .enabled)
-                        } else {
-                            future = device.set(powerLevel: .standby)
+        while let _ = readLine(strippingNewline: false) {
+            logger.notice("🔍 ... discovering new devices.")
+                lifxDeviceManager.discoverDevices()
+                    .whenSuccess {
+                        guard !lifxDeviceManager.devices.isEmpty else {
+                            logger.warning("🔍 Could not find any LIFX devices.")
+                            return
                         }
                         
-                        future.whenSuccess { powerLevel in
-                            logger.notice("💡 \(device.label) is now \(powerLevel)")
-                        }
-                        future.whenFailure { error in
-                            logger.error("Could not change powerLevel of \(device.label): \"\(error)\"")
+                        logger.notice("✅ Discovered the following devices:")
+                        for device in lifxDeviceManager.devices {
+                            logger.notice(
+                                "\(device.label) (\(device.group), \(device.location)): \(device.powerLevel)"
+                            )
                         }
                         
-                        on.toggle()
+                        logger.notice("💡 Turning all devices \(on ? "on" :  "off")")
+                        lifxDeviceManager.devices.forEach { device in
+                            let future: EventLoopFuture<Device.PowerLevel>
+                            if on {
+                                future = device.set(powerLevel: .enabled)
+                            } else {
+                                future = device.set(powerLevel: .standby)
+                            }
+                            
+                            future.whenSuccess { powerLevel in
+                                logger.notice("💡 \(device.label) is now \(powerLevel)")
+                            }
+                            future.whenFailure { error in
+                                logger.error("Could not change powerLevel of \(device.label): \"\(error)\"")
+                            }
+                            
+                            on.toggle()
+                        }
                     }
-                }
-        //}
+        }
 
-        while let _ = readLine(strippingNewline: false) {}
         try eventLoopGroup.syncShutdownGracefully()
     }
     

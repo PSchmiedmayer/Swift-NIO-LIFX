@@ -59,18 +59,21 @@ public final class LIFXDeviceManager {
         
         // Begin by setting up the basics of the bootstrap.
         let bootstrap = DatagramBootstrap(group: eventLoopGroup)
-            .channelOption(ChannelOptions.socket(SocketOptionLevel(SOL_SOCKET), SO_REUSEADDR), value: 1)
-            .channelOption(ChannelOptions.socket(SocketOptionLevel(SOL_SOCKET), SO_REUSEPORT), value: 1)
-            .channelOption(ChannelOptions.socket(SocketOptionLevel(SOL_SOCKET), SO_BROADCAST), value: 1)
+            .channelOption(ChannelOptions.socket(SOL_SOCKET, SO_REUSEADDR), value: 1)
+            .channelOption(ChannelOptions.socket(SOL_SOCKET, SO_REUSEPORT), value: 1)
+            .channelOption(ChannelOptions.socket(SOL_SOCKET, SO_BROADCAST), value: 1)
             .channelInitializer { channel in
                 channel.pipeline.addHandlers([MessageEncoder(), MessageDecoder(), messageHandler])
             }
         
         self.messageHandler = messageHandler
         self.eventLoopGroup = eventLoopGroup
-        self.channel = try bootstrap.bind(host: "0.0.0.0", port: 56700).wait()
         
-        discoverDevices()
+        guard let ipAddress = networkDevice.address?.ipAddress else {
+            preconditionFailure("Can not get the bindable IP address of the network interface")
+        }
+        
+        self.channel = try bootstrap.bind(host: ipAddress, port: 56700).wait()
     }
     
     
