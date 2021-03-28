@@ -69,11 +69,7 @@ public final class LIFXDeviceManager {
         self.messageHandler = messageHandler
         self.eventLoopGroup = eventLoopGroup
         
-        guard let ipAddress = networkDevice.address?.ipAddress else {
-            preconditionFailure("Can not get the bindable IP address of the network interface")
-        }
-        
-        self.channel = try bootstrap.bind(host: ipAddress, port: 56700).wait()
+        self.channel = try bootstrap.bind(host: "0.0.0.0", port: 56700).wait()
     }
     
     
