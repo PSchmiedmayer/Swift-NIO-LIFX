@@ -1,4 +1,5 @@
 import ArgumentParser
+import Foundation
 import Logging
 import NIO
 import NIOLIFX
@@ -32,7 +33,7 @@ struct LIFX: ParsableCommand {
         logger.logLevel = logLevel
         
         let networkInterface = getNetworkInterface(logger)
-        let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 2)
+        let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 1)
 
         let lifxDeviceManager = try LIFXDeviceManager(using: networkInterface, on: eventLoopGroup, logLevel: logLevel)
         
@@ -49,41 +50,32 @@ struct LIFX: ParsableCommand {
             """
         )
         
-        while let _ = readLine(strippingNewline: false) {
-            print("🔍 ... discovering new devices.")
-                lifxDeviceManager.discoverDevices()
-                    .whenSuccess {
-                        guard !lifxDeviceManager.devices.isEmpty else {
-                            print("🔍 Could not find any LIFX devices.")
-                            return
-                        }
-                        
-                        print("✅ Discovered the following devices:")
-                        for device in lifxDeviceManager.devices {
-                            print("   💡 \(device.label) (\(device.group), \(device.location)): \(device.powerLevel.wrappedValue == .enabled ? "On" : "Off")")
-                        }
-                        
-                        print("⚙️ Turning all devices \(on ? "on" :  "off")")
-                        lifxDeviceManager.devices.forEach { device in
-                            let future: EventLoopFuture<Device.PowerLevel>
-                            if on {
-                                future = device.set(powerLevel: .enabled)
-                            } else {
-                                future = device.set(powerLevel: .standby)
-                            }
-                            
-                            future.whenSuccess { powerLevel in
-                                print("   💡 \(device.label)  (\(device.group), \(device.location)) is now turned \(device.powerLevel.wrappedValue == .enabled ? "on" : "off").")
-                            }
-                            future.whenFailure { error in
-                                logger.error("Could not change powerLevel of \(device.label): \"\(error)\"")
-                            }
-                            
-                            on.toggle()
-                        }
+        print("🔍 ... discovering new devices.")
+        lifxDeviceManager.discoverDevices()
+            .whenSuccess {
+                guard !lifxDeviceManager.devices.isEmpty else {
+                    print("🔍 Could not find any LIFX devices.")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        try! eventLoopGroup.syncShutdownGracefully()
+                        LIFX.exit()
                     }
+                    return
+                }
+                
+                print("✅ Discovered the following devices:")
+                for device in lifxDeviceManager.devices {
+                    print("   💡 \(device.label) (\(device.group), \(device.location)): \(device.powerLevel.wrappedValue == .enabled ? "On" : "Off")")
+                }
+            }
+        
+        while let _ = readLine(strippingNewline: false) {
+            print("⚙️ Turning all devices \(on ? "on" :  "off")")
+            for device in lifxDeviceManager.devices {
+                _ = try device.set(powerLevel: on ? .enabled : .standby).wait()
+                on.toggle()
+            }
         }
-
+        
         try eventLoopGroup.syncShutdownGracefully()
     }
     

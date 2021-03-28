@@ -59,19 +59,11 @@ class PowerLevelMessage: Message {
          requestResponse: Bool,
          sequenceNumber: UInt8,
          payload: ByteBuffer) throws {
-        guard payload.readableBytes >= 2 else {
+        guard payload.readableBytes >= MemoryLayout<Device.PowerLevel.RawValue>.size else {
             throw MessageError.messageFormat
         }
         
-        guard let rawPowerLevel: UInt16 = payload.getInteger(at: payload.readerIndex) else {
-            throw ByteBufferError.notEnoughtBytes
-        }
-        
-        guard let powerLevel = Device.PowerLevel(rawValue: rawPowerLevel) else {
-            throw MessageError.messageFormat
-        }
-        
-        self.powerLevel = powerLevel
+        self.powerLevel = try payload.getPowerLevel(at: payload.readerIndex).powerLevel
         
         super.init(source: source,
                    target: target,

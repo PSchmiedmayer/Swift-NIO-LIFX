@@ -95,11 +95,16 @@ public class Device {
         self.address = address
         self.deviceManager = deviceManager
         self.service.wrappedValue = service
-        self.label.load()
-        self.group.load()
-        self.location.load()
-        self.powerLevel.load()
     }
+    
+    public func loadBasicInformation() -> EventLoopFuture<Void> {
+        label.load()
+            .and(group.load())
+            .and(location.load())
+            .and(powerLevel.load())
+            .map { _ in }
+    }
+    
     
     /**
      Set the power level of the `Device`.

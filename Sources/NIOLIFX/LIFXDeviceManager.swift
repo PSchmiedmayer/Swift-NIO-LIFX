@@ -108,7 +108,21 @@ public final class LIFXDeviceManager {
         
         let timeoutTask = eventLoop.scheduleTask(in: Constants.lifxTimout) {
             self.devices.subtracting(newlyDiscoveredDevices).forEach({ self.devices.remove($0) })
-            discoverPromise.succeed(())
+            
+            LIFXDeviceManager.logger.info(
+                "Disovered \(self.devices.count). Loading basic information for all devices."
+            )
+            
+            EventLoopFuture<Void>
+                .reduce(
+                    Void(),
+                    self.devices.map { device in
+                        device.loadBasicInformation()
+                    },
+                    on: self.eventLoop,
+                    { _, _ in }
+                )
+                .cascade(to: discoverPromise)
         }
         
         userOutboundEventFuture.whenSuccess {

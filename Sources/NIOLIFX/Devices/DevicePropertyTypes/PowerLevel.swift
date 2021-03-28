@@ -58,15 +58,15 @@ extension ByteBuffer {
     func getPowerLevel(at index: Int) throws -> (powerLevel: Device.PowerLevel, byteSize: Int) {
         precondition(index >= 0, "index must not be negative")
         
-        guard let rawService: Device.PowerLevel.RawValue = getInteger(at: index, endianness: .little) else {
+        guard let rawPowerLevel: Device.PowerLevel.RawValue = getInteger(at: index, endianness: .little) else {
             throw ByteBufferError.notEnoughtReadableBytes
         }
         
-        guard let service = Device.PowerLevel(rawValue: rawService) else {
+        guard let powerLevel = Device.PowerLevel(rawValue: rawPowerLevel) else {
             throw ByteBufferError.notEnoughtReadableBytes
         }
         
-        return (service, MemoryLayout<Device.PowerLevel.RawValue>.size)
+        return (powerLevel, MemoryLayout<Device.PowerLevel.RawValue>.size)
     }
     
     /**
