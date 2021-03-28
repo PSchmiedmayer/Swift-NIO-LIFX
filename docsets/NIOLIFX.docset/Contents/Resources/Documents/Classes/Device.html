@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Device Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Class/Device" class="dashAnchor"></a>
+
+    <a title="Device Class Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          NIOLIFX Docs
+        </a>
+         (80% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/Pschmiedmayer/Swift-NIO-LIFX">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">NIOLIFX Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      Device Class Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Guides.html">Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../readme.html">README</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Device.html">Device</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Device/Firmware.html">– Firmware</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Device/Group.html">– Group</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Device/HardwareInfo.html">– HardwareInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Device/Location.html">– Location</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Device/PowerLevel.html">– PowerLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Device/RuntimeInfo.html">– RuntimeInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Device/Service.html">– Service</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Device/ServiceType.html">– ServiceType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Device/TransmissionInfo.html">– TransmissionInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/FutureValue.html">FutureValue</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/LIFXDeviceManager.html">LIFXDeviceManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/LIFXDeviceManager/Constants.html">– Constants</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs.html#/s:7NIOLIFX10IdentifierV">Identifier</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content top-matter">
+            <h1>Device</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Device</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Device</span><span class="p">:</span> <span class="kt">CustomStringConvertible</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Device</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Device</span><span class="p">:</span> <span class="kt">Hashable</span></code></pre>
+
+                </div>
+              </div>
+            <p>A <code>Device</code>, is a LIFX product independent of its specific type.</p>
+
+<p>Device messages control and acquire the state of the <code>Devices</code>.
+The state of a <code>Device</code> is composed of the <code>service</code>, <code>port</code>, <code>hardwareInfo</code>, <code>firmware</code>,
+<code>transmissionInfo</code>, <code>powerLevel</code>, <code>runtimeInfo</code>, <code>label</code>, <code>location</code>, and <code>group</code>.
+These properties are common to all LIFX devices, which may also implement device specific behaviour,
+such as <code>ColorLight</code>s, <code>InfraredLight</code>s, <code>MultiZoneLight</code>s and <code>Tile</code>s.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC7addresss6UInt64Vvp"></a>
+                    <a name="//apple_ref/swift/Property/address" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC7addresss6UInt64Vvp">address</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>6 byte device address (MAC address) of the <code>Target</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">address</span><span class="p">:</span> <span class="kt">UInt64</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC7serviceAA11FutureValueCyAC7ServiceVGvp"></a>
+                    <a name="//apple_ref/swift/Property/service" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC7serviceAA11FutureValueCyAC7ServiceVGvp">service</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The <code><a href="../Classes/Device/Service.html">Service</a></code> and IP port number used by a LIFX device to communicate with this <code>Device</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">service</span><span class="p">:</span> <span class="kt"><a href="../Classes/FutureValue.html">FutureValue</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Device/Service.html">Service</a></span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC12hardwareInfoAA11FutureValueCyAC08HardwareD0VGvp"></a>
+                    <a name="//apple_ref/swift/Property/hardwareInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC12hardwareInfoAA11FutureValueCyAC08HardwareD0VGvp">hardwareInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Hardware information about the <code>Device</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">hardwareInfo</span><span class="p">:</span> <span class="kt"><a href="../Classes/FutureValue.html">FutureValue</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Device/HardwareInfo.html">HardwareInfo</a></span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC8firmwareAA11FutureValueCyAC8FirmwareVGvp"></a>
+                    <a name="//apple_ref/swift/Property/firmware" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC8firmwareAA11FutureValueCyAC8FirmwareVGvp">firmware</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Firmware information about the <code>Device</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">firmware</span><span class="p">:</span> <span class="kt"><a href="../Classes/FutureValue.html">FutureValue</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Device/Firmware.html">Firmware</a></span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC16transmissionInfoAA11FutureValueCyAC012TransmissionD0VGvp"></a>
+                    <a name="//apple_ref/swift/Property/transmissionInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC16transmissionInfoAA11FutureValueCyAC012TransmissionD0VGvp">transmissionInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Transmission information about the <code>Device</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">transmissionInfo</span><span class="p">:</span> <span class="kt"><a href="../Classes/FutureValue.html">FutureValue</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Device/TransmissionInfo.html">TransmissionInfo</a></span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC10powerLevelAA11FutureValueCyAC05PowerD0OGvp"></a>
+                    <a name="//apple_ref/swift/Property/powerLevel" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC10powerLevelAA11FutureValueCyAC05PowerD0OGvp">powerLevel</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The power level of the <code>Device</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">powerLevel</span><span class="p">:</span> <span class="kt"><a href="../Classes/FutureValue.html">FutureValue</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Device/PowerLevel.html">PowerLevel</a></span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC11runtimeInfoAA11FutureValueCyAC07RuntimeD0VGvp"></a>
+                    <a name="//apple_ref/swift/Property/runtimeInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC11runtimeInfoAA11FutureValueCyAC07RuntimeD0VGvp">runtimeInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The power level of the <code>Device</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">runtimeInfo</span><span class="p">:</span> <span class="kt"><a href="../Classes/FutureValue.html">FutureValue</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Device/RuntimeInfo.html">RuntimeInfo</a></span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC5labelAA11FutureValueCySSGvp"></a>
+                    <a name="//apple_ref/swift/Property/label" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC5labelAA11FutureValueCySSGvp">label</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The label describing the <code>Device</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">label</span><span class="p">:</span> <span class="kt"><a href="../Classes/FutureValue.html">FutureValue</a></span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC8locationAA11FutureValueCyAC8LocationVGvp"></a>
+                    <a name="//apple_ref/swift/Property/location" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC8locationAA11FutureValueCyAC8LocationVGvp">location</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The <code><a href="../Classes/Device/Location.html">Location</a></code> of the <code>Device</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">location</span><span class="p">:</span> <span class="kt"><a href="../Classes/FutureValue.html">FutureValue</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Device/Location.html">Location</a></span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC5groupAA11FutureValueCyAC5GroupVGvp"></a>
+                    <a name="//apple_ref/swift/Property/group" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC5groupAA11FutureValueCyAC5GroupVGvp">group</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The <code><a href="../Classes/Device/Group.html">Group</a></code> the <code>Device</code> belongs to.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">group</span><span class="p">:</span> <span class="kt"><a href="../Classes/FutureValue.html">FutureValue</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Device/Group.html">Group</a></span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC20loadBasicInformation3NIO15EventLoopFutureCyytGyF"></a>
+                    <a name="//apple_ref/swift/Method/loadBasicInformation()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC20loadBasicInformation3NIO15EventLoopFutureCyytGyF">loadBasicInformation()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">loadBasicInformation</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">EventLoopFuture</span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC3set10powerLevel3NIO15EventLoopFutureCyAC05PowerE0OGAJ_tF"></a>
+                    <a name="//apple_ref/swift/Method/set(powerLevel:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC3set10powerLevel3NIO15EventLoopFutureCyAC05PowerE0OGAJ_tF">set(powerLevel:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set the power level of the <code>Device</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">set</span><span class="p">(</span><span class="nv">powerLevel</span><span class="p">:</span> <span class="kt"><a href="../Classes/Device/PowerLevel.html">PowerLevel</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">EventLoopFuture</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Device/PowerLevel.html">PowerLevel</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC3set5label3NIO15EventLoopFutureCySSGSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/set(label:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC3set5label3NIO15EventLoopFutureCySSGSS_tF">set(label:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set the label of the <code>Device</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">set</span><span class="p">(</span><span class="nv">label</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">EventLoopFuture</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC3set8location3NIO15EventLoopFutureCyAC8LocationVGAJ_tF"></a>
+                    <a name="//apple_ref/swift/Method/set(location:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC3set8location3NIO15EventLoopFutureCyAC8LocationVGAJ_tF">set(location:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set the <code><a href="../Classes/Device/Location.html">Location</a></code> of the <code>Device</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">set</span><span class="p">(</span><span class="nv">location</span><span class="p">:</span> <span class="kt"><a href="../Classes/Device/Location.html">Location</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">EventLoopFuture</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Device/Location.html">Location</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC3set5group3NIO15EventLoopFutureCyAC5GroupVGAJ_tF"></a>
+                    <a name="//apple_ref/swift/Method/set(group:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC3set5group3NIO15EventLoopFutureCyAC5GroupVGAJ_tF">set(group:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set the <code><a href="../Classes/Device/Group.html">Group</a></code> of the <code>Device</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">set</span><span class="p">(</span><span class="nv">group</span><span class="p">:</span> <span class="kt"><a href="../Classes/Device/Group.html">Group</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">EventLoopFuture</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Device/Group.html">Group</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC18updateCachedValues4fromyAC_tF"></a>
+                    <a name="//apple_ref/swift/Method/updateCachedValues(from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC18updateCachedValues4fromyAC_tF">updateCachedValues(from:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Update the cachedValues of this <code>Device</code> from a previous version of this <code>Device</code>.</p>
+<div class="aside aside-precondition">
+    <p class="aside-title">Precondition</p>
+    The <code><a href="../Classes/Device.html#/s:7NIOLIFX6DeviceC7addresss6UInt64Vvp">address</a></code> of the <code>oldDevice</code> must be the same as the <code><a href="../Classes/Device.html#/s:7NIOLIFX6DeviceC7addresss6UInt64Vvp">address</a></code> of this device.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateCachedValues</span><span class="p">(</span><span class="n">from</span> <span class="nv">oldDevice</span><span class="p">:</span> <span class="kt">Device</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>oldDevice</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The old <code>Device</code> that is used to update the cached values of this <code>Device</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s23CustomStringConvertibleP11descriptionSSvp"></a>
+                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s23CustomStringConvertibleP11descriptionSSvp">description</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SQ2eeoiySbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SQ2eeoiySbx_xtFZ">==(_:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Device</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Device</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SH4hash4intoys6HasherVz_tF"></a>
+                    <a name="//apple_ref/swift/Method/hash(into:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SH4hash4intoys6HasherVz_tF">hash(into:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">hash</span><span class="p">(</span><span class="n">into</span> <span class="nv">hasher</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Hasher</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC8FirmwareV"></a>
+                    <a name="//apple_ref/swift/Struct/Firmware" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC8FirmwareV">Firmware</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes the MCU (Microcontroller unit) firmware information</p>
+
+                        <a href="../Classes/Device/Firmware.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Firmware</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC5GroupV"></a>
+                    <a name="//apple_ref/swift/Struct/Group" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC5GroupV">Group</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Group of a <code><a href="../Classes/Device.html">Device</a></code>.</p>
+
+<p>The LIFX Application allows users to organise each bulb by giving it a <code>Group</code> and a <code><a href="../Classes/Device/Location.html">Location</a></code>. Most users use
+groups to represent a room, and location to represent a property (such as a house or office) but this does
+not need to be the case. These <code>Group</code> and <code><a href="../Classes/Device/Location.html">Location</a></code> are stored on the bulbs themselves, and are designed so
+that they can be modified or renamed as long as one of the bulbs in the affected group is powered on.</p>
+
+                        <a href="../Classes/Device/Group.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Group</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt"><a href="../Classes/Device.html">Device</a></span><span class="o">.</span><span class="kt">Group</span><span class="p">:</span> <span class="kt">CustomStringConvertible</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC12HardwareInfoV"></a>
+                    <a name="//apple_ref/swift/Struct/HardwareInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC12HardwareInfoV">HardwareInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Provides the hardware version of the light. See <a href="https://lan.developer.lifx.com/v2.0/docs/lifx-products">LIFX Products</a>
+for how to interpret the vendor and product ID fields.</p>
+
+                        <a href="../Classes/Device/HardwareInfo.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">HardwareInfo</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC8LocationV"></a>
+                    <a name="//apple_ref/swift/Struct/Location" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC8LocationV">Location</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Location of a <code><a href="../Classes/Device.html">Device</a></code>.</p>
+
+<p>The LIFX Application allows users to organise each bulb by giving it a <code><a href="../Classes/Device/Group.html">Group</a></code> and a <code>Location</code>. Most users use
+groups to represent a room, and location to represent a property (such as a house or office) but this does
+not need to be the case. These <code><a href="../Classes/Device/Group.html">Group</a></code> and <code>Location</code> are stored on the bulbs themselves, and are designed so
+that they can be modified or renamed as long as one of the bulbs in the affected group is powered on.</p>
+
+                        <a href="../Classes/Device/Location.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Location</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt"><a href="../Classes/Device.html">Device</a></span><span class="o">.</span><span class="kt">Location</span><span class="p">:</span> <span class="kt">CustomStringConvertible</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC10PowerLevelO"></a>
+                    <a name="//apple_ref/swift/Enum/PowerLevel" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC10PowerLevelO">PowerLevel</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes the power level of a <code><a href="../Classes/Device.html">Device</a></code>.</p>
+
+                        <a href="../Classes/Device/PowerLevel.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">PowerLevel</span> <span class="p">:</span> <span class="kt">UInt16</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt"><a href="../Classes/Device.html">Device</a></span><span class="o">.</span><span class="kt">PowerLevel</span><span class="p">:</span> <span class="kt">CustomStringConvertible</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC11RuntimeInfoV"></a>
+                    <a name="//apple_ref/swift/Struct/RuntimeInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC11RuntimeInfoV">RuntimeInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Provides run-time information of a <code><a href="../Classes/Device.html">Device</a></code>.</p>
+
+                        <a href="../Classes/Device/RuntimeInfo.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">RuntimeInfo</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC7ServiceV"></a>
+                    <a name="//apple_ref/swift/Struct/Service" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC7ServiceV">Service</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The <code>Service</code> and IP port number used by a LIFX device to communicate with this <code><a href="../Classes/Device.html">Device</a></code>.</p>
+
+                        <a href="../Classes/Device/Service.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Service</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC11ServiceTypeO"></a>
+                    <a name="//apple_ref/swift/Enum/ServiceType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC11ServiceTypeO">ServiceType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes the services exposed by the light.</p>
+
+<p>The LIFX Protocol currently utilizes UDP/IP for all messages.</p>
+
+                        <a href="../Classes/Device/ServiceType.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">ServiceType</span> <span class="p">:</span> <span class="kt">UInt8</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NIOLIFX6DeviceC16TransmissionInfoV"></a>
+                    <a name="//apple_ref/swift/Struct/TransmissionInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NIOLIFX6DeviceC16TransmissionInfoV">TransmissionInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes the transmisson information of a <code><a href="../Classes/Device.html">Device</a></code> subsystem.</p>
+
+                        <a href="../Classes/Device/TransmissionInfo.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">TransmissionInfo</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2021 <a class="link" href="https://github.com/PSchmiedmayer" target="_blank" rel="external">Paul Schmiedmayer</a>. All rights reserved. (Last updated: 2021-03-28)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

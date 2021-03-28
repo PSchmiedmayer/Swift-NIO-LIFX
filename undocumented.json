@@ -1,0 +1,145 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/Devices/ColorLightPropertyTypes/Identifier.swift",
+      "line": 4,
+      "symbol": "Identifier",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/Devices/Device.swift",
+      "line": 100,
+      "symbol": "Device.loadBasicInformation()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/FutureValue.swift",
+      "line": 5,
+      "symbol": "FutureValue",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/FutureValue.swift",
+      "line": 6,
+      "symbol": "FutureValue.Future",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/FutureValue.swift",
+      "line": 7,
+      "symbol": "FutureValue.Promise",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/FutureValue.swift",
+      "line": 10,
+      "symbol": "FutureValue.wrappedValue",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/FutureValue.swift",
+      "line": 15,
+      "symbol": "FutureValue.projectedValue",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/FutureValue.swift",
+      "line": 27,
+      "symbol": "FutureValue.load()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/FutureValue.swift",
+      "line": 42,
+      "symbol": "FutureValue.cancelLoading()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/FutureValue.swift",
+      "line": 47,
+      "symbol": "FutureValue",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/FutureValue.swift",
+      "line": 53,
+      "symbol": "FutureValue",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/FutureValue.swift",
+      "line": 59,
+      "symbol": "FutureValue",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/LIFXDeviceManager.swift",
+      "line": 7,
+      "symbol": "LIFXDeviceManager",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/LIFXDeviceManager.swift",
+      "line": 8,
+      "symbol": "LIFXDeviceManager.Constants",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/LIFXDeviceManager.swift",
+      "line": 9,
+      "symbol": "LIFXDeviceManager.Constants.lifxTimout",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/LIFXDeviceManager.swift",
+      "line": 17,
+      "symbol": "LIFXDeviceManager.devices",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/LIFXDeviceManager.swift",
+      "line": 22,
+      "symbol": "LIFXDeviceManager.updateNotifier",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/LIFXDeviceManager.swift",
+      "line": 42,
+      "symbol": "LIFXDeviceManager.eventLoop",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/LIFXDeviceManager.swift",
+      "line": 47,
+      "symbol": "LIFXDeviceManager.init(using:on:logLevel:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX/Sources/NIOLIFX/LIFXDeviceManager.swift",
+      "line": 86,
+      "symbol": "LIFXDeviceManager.discoverDevices()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/runner/work/Swift-NIO-LIFX/Swift-NIO-LIFX"
+}
