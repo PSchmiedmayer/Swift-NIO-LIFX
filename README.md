@@ -5,4 +5,8 @@
 
 Implementation of the LIFX LAN protocol in Swift based on Swift NIO.
 
-**Reference:** [LIFX LAN PROTOCOL](https://lan.developer.lifx.com/docs/introduction)
+You can find a reference of the [LIFX LAN PROTOCOL](https://lan.developer.lifx.com/docs/introduction) on [lan.developer.lifx.com](https://lan.developer.lifx.com/docs/introduction).
+
+## Example
+
+The repository contains a small example command line tool that can be used to discover all devices on a network and toggle them on and off.
