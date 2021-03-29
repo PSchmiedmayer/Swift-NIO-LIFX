@@ -8,7 +8,7 @@ You can find a reference of the [LIFX LAN PROTOCOL](https://lan.developer.lifx.c
 
 ## Example
 
-The repository contains a small example command line tool that can be used to discover all devices on a network and toggle them on and off.
+The repository contains a small example command-line tool that can be used to discover all devices on a network and toggle them on and off.
 
 ## Building
 
@@ -20,11 +20,11 @@ If you use macOS, you can use [Xcode](https://apps.apple.com/de/app/xcode/id4977
 
 ### Swift Command Line Tool
 
-On [plattforms that support the Swift Package Manager](https://swift.org/platform-support/) you can use the `swift build`, `swift run` and `swift tests` commands to build, run and test the source code.
+On [plattforms that support the Swift Package Manager](https://swift.org/platform-support/) you can use the `swift build`, `swift run`, and `swift tests` commands to build, run and test the source code.
 
 ### Visual Studio Code on any operating system
 
-> ⚠️ Be aware that UDP broadcast currenlty doesn't work in the Docker containers. If you want to test the device discovery you need to run a docker container using the host network or directly run the code on the target plattform.
+> ⚠️ Be aware that UDP broadcast currently doesn't work in the Docker containers. If you want to test the device discovery, you need to run a docker container using the host network or directly run the code on the target platform.
 
 If you are not using macOS or don't want to use Xcode, you can use [Visual Studio Code](https://code.visualstudio.com) using the [Remote Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) plugin. You must install the latest version of [Visual Studio Code](https://code.visualstudio.com), the latest version of the [Remote Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) plugin and [Docker](https://www.docker.com/products/docker-desktop).
 
