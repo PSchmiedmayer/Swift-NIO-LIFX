@@ -20,4 +20,3 @@ enum ByteBufferError: Error {
      */
     case notEnoughtBytes
 }
-

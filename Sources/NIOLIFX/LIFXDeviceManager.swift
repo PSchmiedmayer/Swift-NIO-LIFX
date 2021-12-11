@@ -3,15 +3,14 @@ import NIO
 import NIOIP
 
 
-
 public final class LIFXDeviceManager {
     public enum Constants {
         public static var lifxTimout: TimeAmount = .seconds(2)
     }
     
     
-    private(set) internal static var sourceIdentifier: UInt32 = UInt32.random(in: UInt32.min..<UInt32.max)
-    private(set) internal static var logger = Logger(label: "NIOLIFX")
+    internal private(set) static var sourceIdentifier = UInt32.random(in: UInt32.min..<UInt32.max)
+    internal private(set) static var logger = Logger(label: "NIOLIFX")
     
     
     public private(set) var devices: Set<Device> = [] {
@@ -115,8 +114,7 @@ public final class LIFXDeviceManager {
                     self.devices.map { device in
                         device.loadBasicInformation()
                     },
-                    on: self.eventLoop,
-                    { _, _ in }
+                    on: self.eventLoop, { _, _ in }
                 )
                 .cascade(to: discoverPromise)
         }

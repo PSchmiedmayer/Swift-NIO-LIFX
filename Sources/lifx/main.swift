@@ -12,7 +12,7 @@ struct LIFX: ParsableCommand {
     }
     
     
-    static var configuration: CommandConfiguration = CommandConfiguration(
+    static var configuration = CommandConfiguration(
         commandName: "lifx",
         abstract: "💡 LIFX NIO Example: An example command line tool to showcase the functionality of the LIFXNIO library."
     )
@@ -29,7 +29,7 @@ struct LIFX: ParsableCommand {
     
     
     mutating func run() throws {
-        var logger: Logger = Logger(label: "lifx")
+        var logger = Logger(label: "lifx")
         logger.logLevel = logLevel
         
         let networkInterface = getNetworkInterface(logger)

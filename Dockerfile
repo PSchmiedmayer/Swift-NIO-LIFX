@@ -25,13 +25,6 @@ WORKDIR /staging
 # Copy main executable to staging area
 RUN cp "$(swift build --package-path /build --show-bin-path)/lifx" ./
 
-# Copy resources from the resources directory if the directories exist
-# Ensure that by default, neither the directory nor any of its contents are writable.
-RUN [ -d "$(swift build --package-path /build/WebService --show-bin-path)/WebService_WebService.resources" ] \
-    && mv "$(swift build --package-path /build/WebService --show-bin-path)/WebService_WebService.resources" ./ \
-    && chmod -R a-w ./WebService_WebService.resources \
-    || echo No resources to copy
-
 # ================================
 # Run image
 # ================================
