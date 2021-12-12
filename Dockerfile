@@ -1,7 +1,7 @@
 # ================================
 # Build image
 # ================================
-FROM swiftlang/swift:nightly-focal as build
+FROM swift:focal as build
 
 # Install OS updates and, if needed, sqlite3
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
@@ -28,7 +28,7 @@ RUN cp "$(swift build --package-path /build --show-bin-path)/lifx" ./
 # ================================
 # Run image
 # ================================
-FROM swiftlang/swift:nightly-focal as run
+FROM swift:focal-slim as run
 
 # Make sure all system packages are up to date.
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
