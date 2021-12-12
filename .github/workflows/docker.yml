@@ -40,6 +40,6 @@ jobs:
           file: ./Dockerfile
           platforms: linux/arm64,linux/amd64
           push: true
-          tags: ghcr.io/jass2021/lifx-post-discovery-action:latest,ghcr.io/jass2021/lifx-post-discovery-action:${{ steps.latesttag.outputs.tag }}
+          tags: ghcr.io/pschmiedmayer/swiftniolifx:latest,ghcr.io/pschmiedmayer/swiftniolifx:${{ steps.latesttag.outputs.tag }}
       - name: Image digest
         run: echo ${{ steps.buildandpush.outputs.digest }}
