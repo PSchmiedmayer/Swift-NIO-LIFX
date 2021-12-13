@@ -16,7 +16,7 @@ let package = Package(
         .package(name: "swift-nio-ip", url: "https://github.com/PSchmiedmayer/Swift-NIO-IP.git", from: "0.0.1")
     ],
     targets: [
-        .target(
+        .executableTarget(
             name: "lifx",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),

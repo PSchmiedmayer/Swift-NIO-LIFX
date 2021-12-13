@@ -4,7 +4,7 @@ import Logging
 import NIO
 import NIOLIFX
 
-
+@main
 struct LIFX: ParsableCommand {
     enum InitialAction: String, Codable, ExpressibleByArgument {
         case on
@@ -110,5 +110,3 @@ struct LIFX: ParsableCommand {
         LIFX.exit()
     }
 }
-
-LIFX.main()
